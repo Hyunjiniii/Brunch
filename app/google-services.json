@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "478028536269",
+    "firebase_url": "https://brunchapp-377cf.firebaseio.com",
+    "project_id": "brunchapp-377cf",
+    "storage_bucket": "brunchapp-377cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478028536269:android:a6408d2a908b9eae",
+        "android_client_info": {
+          "package_name": "com.example.anhyunjin.brunch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478028536269-c29tard9etkscqj9gt03rnm2hfqsi91v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvCPKpv_bcd28_Kwrat023v8Z9HmxQFLI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
