@@ -1,7 +1,10 @@
 package com.example.anhyunjin.brunch;
 
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +38,7 @@ public class WriteActivity extends AppCompatActivity {
     private EditText sub;
     private EditText title;
     private EditText content;
+    private EditText email;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
@@ -48,6 +57,7 @@ public class WriteActivity extends AppCompatActivity {
         sub = (EditText) findViewById(R.id.sub_title);
         title = (EditText) findViewById(R.id.title);
         content = (EditText) findViewById(R.id.contents);
+        email = (EditText) findViewById(R.id.email_login);
 
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +72,7 @@ public class WriteActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
                     Item a = new Item(title.getText().toString(), sub.getText().toString(), content.getText().toString(), formatDate);
-                    items.add(a);
+
                     databaseReference.child("contents").push().setValue(a);
 
                     finish();

@@ -8,13 +8,6 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:hint="UserName" />
-
-    <EditText
         android:id="@+id/email_join"
         android:inputType="textEmailAddress"
         android:layout_marginTop="8sp"
@@ -31,6 +24,12 @@
         android:singleLine="true"
         android:hint="Password" />
 
+    <TextView
+        android:layout_marginLeft="4sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="조건 : 6자 이상"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,9 +38,8 @@
         <Button
             android:layout_marginTop="8sp"
             android:id="@+id/sign_up_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Sign Up"
             android:layout_marginRight="10sp"
             android:background="@drawable/btn_shape"/>
