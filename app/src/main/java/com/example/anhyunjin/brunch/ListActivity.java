@@ -109,6 +109,11 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ListActivity.this, LoginActivity.class);
                 startActivity(intent);
+                SharedPreferences pref = getSharedPreferences("pref", 0);
+                SharedPreferences.Editor editor = pref.edit();
+                //editor.clear()는 auto에 들어있는 모든 정보를 기기에서 지웁니다.
+                editor.clear();
+                editor.commit();
                 finish();
             }
         });
