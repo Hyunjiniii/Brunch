@@ -15,9 +15,7 @@ public class Item {
         this.content = content;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
+    public String getTitle() { return this.title; }
 
     public String getDate() {
         return this.date;

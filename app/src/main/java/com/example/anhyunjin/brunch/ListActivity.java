@@ -10,13 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -33,7 +36,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -42,21 +48,18 @@ public class ListActivity extends AppCompatActivity {
     private long time = 0;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
-    private FloatingActionButton add;
-    private ImageView more;
+    private FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_design);
-
         setContentView(R.layout.recyclerview);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        add = (FloatingActionButton) findViewById(R.id.fbutton);
-        more = (ImageView) findViewById(R.id.more_vert);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -88,7 +91,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListActivity.this, WriteActivity.class);
@@ -96,25 +99,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu p = new PopupMenu(getApplicationContext(), v);
-                getMenuInflater().inflate(R.menu.menu, p.getMenu());
-                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.delete:
-                                Toast.makeText(getApplication(), "ㅎ", Toast.LENGTH_SHORT).show();
-
-                        }
-                        return false;
-                    }
-                });
-                p.show();
-            }
-        });
 
     }
 
@@ -126,6 +110,7 @@ public class ListActivity extends AppCompatActivity {
         } else if (System.currentTimeMillis() - time < 1500)
             finish();
     }
+
 
 }
 

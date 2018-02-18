@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ public class JoinActivity extends AppCompatActivity {
     private EditText edit_ps;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
+    TextInputLayout pw_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class JoinActivity extends AppCompatActivity {
         edit_ps = (EditText) findViewById(R.id.ps_join);
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+
+        pw_layout = (TextInputLayout) findViewById(R.id.pw_layout);
 
         sign_up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +69,8 @@ public class JoinActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Password를 입력해 주세요.", Toast.LENGTH_SHORT).show();
         }
+        else if(password.length() < 6)
+            pw_layout.setError("6자리 이상으로 작성해 주세요.");
 
         progressDialog.setMessage("등록중입니다. 기다려 주세요...");
         progressDialog.show();
