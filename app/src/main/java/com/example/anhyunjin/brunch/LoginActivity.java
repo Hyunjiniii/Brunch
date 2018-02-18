@@ -1,5 +1,6 @@
 package com.example.anhyunjin.brunch;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,25 +20,28 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private boolean saveLoginData;
     private String email;
     private String pwd;
-
     private Button login_btn;
     private TextView join_btn;
     private EditText email_login;
     private EditText ps_login;
     private CheckBox autologin;
-    SharedPreferences pref;
-    ProgressDialog progressDialog;
-    FirebaseAuth firebaseAuth;
+    private SharedPreferences pref;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         login_btn = (Button) findViewById(R.id.login_btn);
         join_btn = (TextView) findViewById(R.id.join);
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = firebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+        firebaseAuth.signOut();
 
         pref = getSharedPreferences("pref", 0);
         load();
@@ -68,15 +73,32 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("로그인중입니다. 잠시 기다려 주세요...");
+                progressDialog.show();
                 save();
-                userLogin();
+                loginEvent();
             }
         });
 
 
-    }
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
 
-    private void save() {
+                if (user != null) {
+                    Intent intent = new Intent(LoginActivity.this, ListActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        };
+
+}
+
+
+    void save() {
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
         SharedPreferences.Editor editor = pref.edit();
 
@@ -90,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void load() {
+    void load() {
         // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
         // 저장된 이름이 존재하지 않을 시 기본값
         saveLoginData = pref.getBoolean("SAVE_LOGIN_DATA", false);
@@ -98,33 +120,33 @@ public class LoginActivity extends AppCompatActivity {
         pwd = pref.getString("PWD", "");
     }
 
-    private void userLogin() {
-        final String email = email_login.getText().toString().trim();
-        final String password = ps_login.getText().toString().trim();
-
-        progressDialog.setMessage("로그인중입니다. 잠시 기다려 주세요...");
-        progressDialog.show();
-
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    void loginEvent() {
+        firebaseAuth.signInWithEmailAndPassword(email_login.getText().toString(), ps_login.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        if (task.isSuccessful()) {
-                            finish();
-                            Intent intent = new Intent(LoginActivity.this, ListActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_LONG).show();
-                        }
+
+                        if (!task.isSuccessful())
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
                     }
                 });
     }
-
-
     @Override
     public void onBackPressed() {
         finish();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAuth.removeAuthStateListener(authStateListener);
+    }
 }
+

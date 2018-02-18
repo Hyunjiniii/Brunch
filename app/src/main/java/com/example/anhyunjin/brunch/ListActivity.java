@@ -1,6 +1,8 @@
 package com.example.anhyunjin.brunch;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +27,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +51,8 @@ public class ListActivity extends AppCompatActivity {
     private long time = 0;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
-    private FloatingActionButton fab;
+    private FloatingActionMenu fam;
+    private com.github.clans.fab.FloatingActionButton fab_add, fab_logout;
 
 
     @Override
@@ -59,7 +63,9 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.recyclerview);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fam = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        fab_add = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab1);
+        fab_logout = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab2);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -91,11 +97,19 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListActivity.this, WriteActivity.class);
                 startActivity(intent);
+            }
+        });
+        fab_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
