@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ public class WriteActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
     private EditText email;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
@@ -66,21 +68,34 @@ public class WriteActivity extends AppCompatActivity {
                 String getEdit2 = title.getText().toString();
                 String getEdit3 = content.getText().toString();
 
+
                 if (getEdit.getBytes().length <= 0 && getEdit2.getBytes().length <= 0 && getEdit3.getBytes().length <= 0)
                     Toast.makeText(WriteActivity.this, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
 
                 else {
-                    Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
-                    Item a = new Item(title.getText().toString(), sub.getText().toString(), content.getText().toString(), formatDate);
 
-                    databaseReference.child("contents").push().setValue(a);
 
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
+                        String uid = user.getUid();
+                        Item a = new Item(title.getText().toString(), sub.getText().toString(), content.getText().toString(), formatDate);
+
+                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").setValue(a);
+                    }
+                    else{
+                        Toast.makeText(WriteActivity.this, "씨빨", Toast.LENGTH_SHORT).show();
+                    }
                     finish();
                 }
             }
         });
 
-        cls.setOnClickListener(new View.OnClickListener() {
+
+        cls.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 String getEdit = sub.getText().toString();
@@ -94,7 +109,9 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
-        pto.setOnClickListener(new View.OnClickListener() {
+        pto.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 final int GALLERY_INTENT = 100;

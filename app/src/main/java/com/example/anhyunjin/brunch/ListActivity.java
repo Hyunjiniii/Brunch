@@ -11,13 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -44,15 +48,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity  implements View.OnClickListener{
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     public static DatabaseReference databaseReference = firebaseDatabase.getReference();
     public static ArrayList<Item> items = new ArrayList<>();
     private long time = 0;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
-    private FloatingActionMenu fam;
-    private com.github.clans.fab.FloatingActionButton fab_add, fab_logout;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab, fab_logout, fab_add;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
 
 
     @Override
@@ -63,14 +68,25 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.recyclerview);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        fam = (FloatingActionMenu) findViewById(R.id.fab_menu);
-        fab_add = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab1);
-        fab_logout = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.fab2);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
+        fab_add = (FloatingActionButton) findViewById(R.id.fab2);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+
+        fab.setOnClickListener(this);
+        fab_logout.setOnClickListener(this);
+        fab_add.setOnClickListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapter(items);
         mRecyclerView.setAdapter(adapter);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
 
         databaseReference.child("contents").addChildEventListener(new ChildEventListener() {
             @Override
@@ -97,29 +113,8 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        fab_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.this, WriteActivity.class);
-                startActivity(intent);
-            }
-        });
-        fab_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
-                startActivity(intent);
-                SharedPreferences pref = getSharedPreferences("pref", 0);
-                SharedPreferences.Editor editor = pref.edit();
-                //editor.clear()는 auto에 들어있는 모든 정보를 기기에서 지웁니다.
-                editor.clear();
-                editor.commit();
-                finish();
-            }
-        });
-
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -130,6 +125,59 @@ public class ListActivity extends AppCompatActivity {
             finish();
     }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab:
+
+                animateFAB();
+                break;
+            case R.id.fab1:
+
+                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
+                startActivity(intent);
+                SharedPreferences pref = getSharedPreferences("pref", 0);
+                SharedPreferences.Editor editor = pref.edit();
+                //editor.clear()는 auto에 들어있는 모든 정보를 기기에서 지웁니다.
+                editor.clear();
+                editor.commit();
+                finish();
+                Log.d("Raj", "Fab 1");
+                break;
+            case R.id.fab2:
+
+                intent = new Intent(ListActivity.this, WriteActivity.class);
+                startActivity(intent);
+                Log.d("Raj", "Fab 2");
+                break;
+        }
+    }
+
+    public void animateFAB() {
+
+        if (isFabOpen) {
+
+            fab.startAnimation(rotate_backward);
+            fab_logout.startAnimation(fab_close);
+            fab_add.startAnimation(fab_close);
+            fab_logout.setClickable(false);
+            fab_add.setClickable(false);
+            isFabOpen = false;
+            Log.d("Raj", "close");
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+            fab_logout.startAnimation(fab_open);
+            fab_add.startAnimation(fab_open);
+            fab_logout.setClickable(true);
+            fab_add.setClickable(true);
+            isFabOpen = true;
+            Log.d("Raj", "open");
+
+        }
+    }
 
 }
 
