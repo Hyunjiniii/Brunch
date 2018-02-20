@@ -31,6 +31,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.anhyunjin.brunch.model.UserModel;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,6 +59,7 @@ public class ListActivity extends AppCompatActivity  implements View.OnClickList
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab_logout, fab_add;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    private EditText edit_name;
 
 
     @Override
@@ -71,6 +73,7 @@ public class ListActivity extends AppCompatActivity  implements View.OnClickList
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
         fab_add = (FloatingActionButton) findViewById(R.id.fab2);
+        edit_name = (EditText) findViewById(R.id.name_join);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -85,33 +88,41 @@ public class ListActivity extends AppCompatActivity  implements View.OnClickList
         mRecyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapter(items);
         mRecyclerView.setAdapter(adapter);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+        if (user != null) {
+            String uid = user.getUid();
 
-        databaseReference.child("contents").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Item item = dataSnapshot.getValue(Item.class);
-                Item a = new Item(item.getTitle(), item.getSub_title(), item.getContent(), item.getDate());
-                items.add(a);
-            }
+            FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Item item = dataSnapshot.getValue(Item.class);
+                    Item a = new Item(item.getTitle(), item.getSub_title(), item.getContent(), item.getDate());
+                    items.add(a);
+                }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
+        else{
+            Toast.makeText(this, "씨발", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

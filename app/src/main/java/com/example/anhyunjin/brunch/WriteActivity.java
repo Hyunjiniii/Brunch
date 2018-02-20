@@ -40,7 +40,6 @@ public class WriteActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
     private EditText email;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
@@ -73,20 +72,12 @@ public class WriteActivity extends AppCompatActivity {
                     Toast.makeText(WriteActivity.this, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
 
                 else {
-
-
-
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if (user != null) {
-                        Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
-                        String uid = user.getUid();
-                        Item a = new Item(title.getText().toString(), sub.getText().toString(), content.getText().toString(), formatDate);
+                    Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
+                    String uid = user.getUid();
+                    Item a = new Item(title.getText().toString(), sub.getText().toString(), content.getText().toString(), formatDate);
 
-                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").setValue(a);
-                    }
-                    else{
-                        Toast.makeText(WriteActivity.this, "씨빨", Toast.LENGTH_SHORT).show();
-                    }
+                    FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").child(title.getText().toString()).setValue(a);
                     finish();
                 }
             }

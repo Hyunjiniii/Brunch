@@ -60,9 +60,8 @@ public class LoginActivity extends AppCompatActivity {
             email_login.setText(email);
             ps_login.setText(pwd);
             autologin.setChecked(saveLoginData);
-            Intent intent = new Intent(LoginActivity.this, ListActivity.class);
-            startActivity(intent);
-            finish();
+            save();
+            loginEvent();
         }
 
         join_btn.setOnClickListener(new View.OnClickListener() {
