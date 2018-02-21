@@ -87,13 +87,15 @@ public class JoinActivity extends AppCompatActivity {
                                 FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
 
 
-                                if (!task.isSuccessful()){
+                                if (!task.isSuccessful()) {
                                     Toast.makeText(JoinActivity.this, "등록 에러! 이메일 중복!", Toast.LENGTH_SHORT).show();
                                     return;
+                                } else{
+                                    Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
 
-                                else
-                                    finish();
 
                                 progressDialog.dismiss();
                             }
