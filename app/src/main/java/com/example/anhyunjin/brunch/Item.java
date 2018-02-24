@@ -6,7 +6,9 @@ public class Item {
     private String date;
     private String content;
 
-    public Item() { }
+    public Item() {
+
+    }
 
     public Item(String title, String sub_title, String content, String date) {
         this.title = title;

@@ -1,36 +1,25 @@
 package com.example.anhyunjin.brunch;
 
-import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.example.anhyunjin.brunch.ListActivity.databaseReference;
-import static com.example.anhyunjin.brunch.ListActivity.items;
 
 public class WriteActivity extends AppCompatActivity {
     private ImageView cls;
@@ -39,7 +28,10 @@ public class WriteActivity extends AppCompatActivity {
     private EditText sub;
     private EditText title;
     private EditText content;
-    private EditText email;
+    private ImageView fonts;
+    private ImageView align;
+    private String fonts_value;
+    private String align_value;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
@@ -58,7 +50,8 @@ public class WriteActivity extends AppCompatActivity {
         sub = (EditText) findViewById(R.id.sub_title);
         title = (EditText) findViewById(R.id.title);
         content = (EditText) findViewById(R.id.contents);
-        email = (EditText) findViewById(R.id.email_login);
+        fonts = (ImageView) findViewById(R.id.fonts);
+        align = (ImageView) findViewById(R.id.sort);
 
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +70,7 @@ public class WriteActivity extends AppCompatActivity {
                     String uid = user.getUid();
                     Item a = new Item(title.getText().toString(), sub.getText().toString(), content.getText().toString(), formatDate);
 
-                    FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").child(title.getText().toString()).setValue(a);
+                    FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").push().setValue(a);
                     finish();
                 }
             }
@@ -113,6 +106,92 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
+        fonts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
+
+                getMenuInflater().inflate(R.menu.menu_fonts, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.font1:
+                                title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/MILKYWAY.TTF"));
+                                sub.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/MILKYWAY.TTF"));
+                                content.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/MILKYWAY.TTF"));
+                                fonts_value = "MILKYWAY";
+                                break;
+                            case R.id.font2:
+                                title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/PNH_FRIENDNET.TTF"));
+                                sub.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/PNH_FRIENDNET.TTF"));
+                                content.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/PNH_FRIENDNET.TTF"));
+                                fonts_value = "PNH_FRIENDNET";
+                                break;
+                            case R.id.font3:
+                                title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RIX_STAR_N_ME.TTF"));
+                                sub.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RIX_STAR_N_ME.TTF"));
+                                content.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RIX_STAR_N_ME.TTF"));
+                                fonts_value = "RIX_STAR_N_ME";
+                                break;
+                            default:
+                                break;
+                        }
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = user.getUid();
+                        FirebaseDatabase.getInstance().getReference().child("Item_plus").child(uid).child(title.getText().toString()).push().setValue("fonts : "+ fonts_value);
+                        return false;
+                    }
+
+                });
+                popup.show();
+
+            }
+        });
+
+        align.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
+
+                getMenuInflater().inflate(R.menu.menu_align, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.left:
+                                ((EditText) title).setGravity(Gravity.LEFT);
+                                ((EditText) sub).setGravity(Gravity.LEFT);
+                                ((EditText) content).setGravity(Gravity.LEFT);
+                                align_value = "LEFT";
+                                break;
+                            case R.id.center:
+                                ((EditText) title).setGravity(Gravity.CENTER);
+                                ((EditText) sub).setGravity(Gravity.CENTER);
+                                ((EditText) content).setGravity(Gravity.CENTER);
+                                align_value = "CENTER";
+                                break;
+                            case R.id.right:
+                                ((EditText) title).setGravity(Gravity.RIGHT);
+                                ((EditText) sub).setGravity(Gravity.RIGHT);
+                                ((EditText) content).setGravity(Gravity.RIGHT);
+                                align_value = "RIGHT";
+                                break;
+                            default:
+                                break;
+                        }
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = user.getUid();
+                        FirebaseDatabase.getInstance().getReference().child("Item_plus").child(uid).child(title.getText().toString()).push().setValue("align : "+ align_value);
+                        return false;
+                    }
+
+                });
+                popup.show();
+            }
+        });
+
     }
 
     public void onBackPressed() {
@@ -145,6 +224,5 @@ public class WriteActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 
 }

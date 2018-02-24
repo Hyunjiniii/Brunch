@@ -71,13 +71,6 @@
                     android:hint="제목"
                     android:inputType="text" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="30dp"
-                    android:maxWidth="30dp"
-                    android:src="@drawable/icon_layer" />
             </LinearLayout>
 
             <View
@@ -121,7 +114,7 @@
         android:layout_marginTop="8dp"
         android:background="#D3D0D0" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -137,22 +130,32 @@
             android:src="@drawable/icon_photo" />
 
         <ImageView
+            android:id="@+id/fonts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="30dp"
             android:adjustViewBounds="true"
             android:maxHeight="30dp"
             android:maxWidth="30dp"
             android:src="@drawable/icon_color" />
 
         <ImageView
+            android:id="@+id/sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="60dp"
             android:adjustViewBounds="true"
             android:maxHeight="30dp"
             android:maxWidth="30dp"
             android:src="@drawable/icon_align" />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/image_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_arrow_drop_up_black_24dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
 </LinearLayout>
