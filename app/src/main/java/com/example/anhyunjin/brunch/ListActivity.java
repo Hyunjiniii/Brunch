@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +60,7 @@ public class ListActivity extends AppCompatActivity  implements View.OnClickList
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab_logout, fab_add;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    private CardView cardView;
 
 
     @Override
@@ -72,6 +74,7 @@ public class ListActivity extends AppCompatActivity  implements View.OnClickList
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
         fab_add = (FloatingActionButton) findViewById(R.id.fab2);
+        cardView = (CardView) findViewById(R.id.cardview);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -123,6 +126,13 @@ public class ListActivity extends AppCompatActivity  implements View.OnClickList
             });
 
         }
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListActivity.this, ClickActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
