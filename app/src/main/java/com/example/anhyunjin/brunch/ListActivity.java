@@ -43,7 +43,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab_logout, fab_add;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
-    private ImageView list_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
         fab_add = (FloatingActionButton) findViewById(R.id.fab2);
-        list_image = (ImageView) findViewById(R.id.list_image);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -81,8 +79,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Item item = dataSnapshot.getValue(Item.class);
-                    Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.getImage(), item.isUrl());
-                    items.add(a);
+                    if (item.getImage()) {
+                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.getImage(), item.geturl());
+                        items.add(a);
+                    } else {
+                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate());
+                        items.add(a);
+                    }
+
                     adapter.notifyDataSetChanged();
                 }
 
@@ -103,7 +107,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
 
                 }
             });

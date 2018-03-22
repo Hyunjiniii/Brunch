@@ -24,7 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private List<Item> items;
     public View view;
 
-    public RecyclerAdapter(List<Item> items){
+    public RecyclerAdapter(List<Item> items) {
         this.items = items;
     }
 
@@ -40,20 +40,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
         final Item contentItem = items.get(position);
 
-        Item item = items.get(position);
-        holder.title.setText(item.getTitle());
-        holder.date.setText(item.getDate());
-        holder.content.setText(item.getContent());
-        holder.imageView.setVisibility(View.VISIBLE);
+        String time = contentItem.getDate();
+        int idx = time.indexOf(" ");
+        final String time1 = time.substring(0, idx);
 
+        holder.title.setText(contentItem.getTitle());
+        holder.date.setText(time1);
+        holder.content.setText(contentItem.getContent());
 
-        Glide.with(holder.imageView.getContext())
-                .load(contentItem.isUrl())
-                .into(holder.imageView);
+        if (contentItem.getImage()) {
+            holder.imageView.setVisibility(View.VISIBLE);
+            holder.title.setVisibility(View.VISIBLE);
+            holder.content.setVisibility(View.VISIBLE);
+            holder.date.setVisibility(View.VISIBLE);
+
+            Glide.with(holder.imageView.getContext())
+                    .load(contentItem.geturl())
+                    .into(holder.imageView);
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+            holder.title.setVisibility(View.VISIBLE);
+            holder.content.setVisibility(View.VISIBLE);
+            holder.date.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
-    public int getItemCount() {return this.items.size();}
+    public int getItemCount() {
+        return this.items.size();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView date;

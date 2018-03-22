@@ -13,9 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".WriteActivity" />
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:windowSoftInputMode="stateAlwaysHidden"
+            android:name=".WriteActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity android:name=".ListActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />

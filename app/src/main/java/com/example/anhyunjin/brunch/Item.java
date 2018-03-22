@@ -7,19 +7,25 @@ public class Item {
     private String title;
     private String date;
     private String content;
-    private String image;
-    private boolean url;
+    private boolean image;
+    private String  url;
 
     public Item() {
 
     }
 
-    public Item(String title, String content, String date, String image, boolean url) {
+    public Item(String title, String content, String date, boolean image, String url) {
         this.title = title;
         this.date = date;
         this.content = content;
         this.image = image;
         this.url = url;
+    }
+
+    public Item(String title, String content, String date){
+        this.title = title;
+        this.content = content;
+        this.date = date;
     }
 
     public String getTitle() { return this.title; }
@@ -32,9 +38,9 @@ public class Item {
         return this.content;
     }
 
-    public String getImage() { return this.image; }
+    public boolean getImage() { return this.image; }
 
-    public boolean isUrl() { return this.url; }
+    public String geturl() { return this.url; }
 
 
 }

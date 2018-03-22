@@ -46,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class WriteActivity extends AppCompatActivity {
+    final int GALLERY_INTENT = 100;
     private StorageReference mStorge = FirebaseStorage.getInstance().getReference();
     private ImageView cls;
     private ImageView chk;
@@ -54,7 +55,6 @@ public class WriteActivity extends AppCompatActivity {
     private EditText content;
     private ImageView align;
     private String align_value;
-    private ImageView list_image;
     private Uri downloadUrl;
 
     long now = System.currentTimeMillis();
@@ -74,7 +74,6 @@ public class WriteActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.write_title);
         content = (EditText) findViewById(R.id.write_contents);
         align = (ImageView) findViewById(R.id.write_align);
-        list_image = (ImageView) findViewById(R.id.list_image);
 
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +162,18 @@ public class WriteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        setList_image(data);
+        if (resultCode != RESULT_OK)
+            return;
+
+        switch (requestCode) {
+            case GALLERY_INTENT:
+                setList_image(data);
+                break;
+
+            default:
+                break;
+
+        }
     }
 
     public void onBackPressed() {
@@ -185,7 +195,7 @@ public class WriteActivity extends AppCompatActivity {
         }
     };
 
-    public void setList_image(Intent data){
+    public void setList_image(Intent data) {
         Uri file = data.getData();
         StorageReference filePath = mStorge.child("images/" + file.getPathSegments());
 
@@ -214,7 +224,7 @@ public class WriteActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
         String uid = user.getUid();
-        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, String.valueOf(downloadUrl), true);
+        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, true, String.valueOf(downloadUrl));
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").push().setValue(a);
 
         finish();

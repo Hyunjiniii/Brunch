@@ -94,11 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
             }
         };
-
-}
+    }
 
 
     void save() {
@@ -130,11 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (!task.isSuccessful())
-                            Toast.makeText(getApplicationContext(), "로그인 오류. 다시 시도하세요.",  Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "로그인 오류. 다시 시도하세요.", Toast.LENGTH_LONG).show();
 
                     }
                 });
     }
+
     @Override
     public void onBackPressed() {
         finish();
