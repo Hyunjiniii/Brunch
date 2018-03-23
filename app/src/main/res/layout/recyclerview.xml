@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="230dp"
+        android:layout_marginRight="15sp"
+        android:src="@drawable/ic_settings_black_24dp"
+        android:visibility="invisible"
+        app:backgroundTint="#ffffff"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"

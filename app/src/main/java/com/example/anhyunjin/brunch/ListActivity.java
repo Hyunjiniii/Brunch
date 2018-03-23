@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.media.session.IMediaControllerCallback;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -41,7 +43,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private Boolean isFabOpen = false;
-    private FloatingActionButton fab, fab_logout, fab_add;
+    private FloatingActionButton fab, fab_logout, fab_add, fab_sys;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
 
     @Override
@@ -56,6 +58,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
         fab_add = (FloatingActionButton) findViewById(R.id.fab2);
+        fab_sys = (FloatingActionButton) findViewById(R.id.fab3);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -65,10 +68,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         fab_logout.setOnClickListener(this);
         fab_add.setOnClickListener(this);
+        fab_sys.setOnClickListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new RecyclerAdapter(items);
+        adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -79,8 +83,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Item item = dataSnapshot.getValue(Item.class);
-                    if (item.getImage()) {
-                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.getImage(), item.geturl());
+                    if (item.isImage()) {
+                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.isImage(), item.geturl());
                         items.add(a);
                     } else {
                         Item a = new Item(item.getTitle(), item.getContent(), item.getDate());
@@ -111,6 +115,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
+
     }
 
     @Override
@@ -145,6 +150,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 Log.d("Raj", "Fab 2");
                 break;
+            case R.id.fab3:
+                break;
         }
     }
 
@@ -155,8 +162,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             fab.startAnimation(rotate_backward);
             fab_logout.startAnimation(fab_close);
             fab_add.startAnimation(fab_close);
+            fab_sys.startAnimation(fab_close);
             fab_logout.setClickable(false);
             fab_add.setClickable(false);
+            fab_sys.setClickable(false);
             isFabOpen = false;
             Log.d("Raj", "close");
 
@@ -165,8 +174,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             fab.startAnimation(rotate_forward);
             fab_logout.startAnimation(fab_open);
             fab_add.startAnimation(fab_open);
+            fab_sys.startAnimation(fab_open);
             fab_logout.setClickable(true);
             fab_add.setClickable(true);
+            fab_sys.setClickable(true);
             isFabOpen = true;
             Log.d("Raj", "open");
 

@@ -8,7 +8,7 @@ public class Item {
     private String date;
     private String content;
     private boolean image;
-    private String  url;
+    private String url;
 
     public Item() {
 
@@ -38,7 +38,7 @@ public class Item {
         return this.content;
     }
 
-    public boolean getImage() { return this.image; }
+    public boolean isImage() { return this.image; }
 
     public String geturl() { return this.url; }
 

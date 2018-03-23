@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context="com.example.anhyunjin.brunch.Onclick_ImageActivity">
+
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/onclick_image_photoView"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/onclick_image_close_button"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_gravity="right"
+        android:background="#000000"
+        android:src="@drawable/ic_close_black_24dp" />
+
+</FrameLayout>

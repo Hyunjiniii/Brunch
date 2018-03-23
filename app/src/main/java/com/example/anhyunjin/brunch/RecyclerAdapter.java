@@ -23,9 +23,11 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private List<Item> items;
     public View view;
+    private Context context;
 
-    public RecyclerAdapter(List<Item> items) {
+    public RecyclerAdapter(List<Item> items, Context context) {
         this.items = items;
+        this.context = context;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.date.setText(time1);
         holder.content.setText(contentItem.getContent());
 
-        if (contentItem.getImage()) {
+        if (contentItem.isImage()) {
             holder.imageView.setVisibility(View.VISIBLE);
             holder.title.setVisibility(View.VISIBLE);
             holder.content.setVisibility(View.VISIBLE);
@@ -63,6 +65,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.content.setVisibility(View.VISIBLE);
             holder.date.setVisibility(View.VISIBLE);
         }
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Onclick_ImageActivity.class);
+                intent.putExtra("url", contentItem.geturl());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
