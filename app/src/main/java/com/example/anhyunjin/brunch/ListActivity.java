@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.anhyunjin.brunch.model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -32,12 +31,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     public static DatabaseReference databaseReference = firebaseDatabase.getReference();
+    public static StorageReference mStorage = FirebaseStorage.getInstance().getReference();
     public static ArrayList<Item> items = new ArrayList<>();
     private long time = 0;
     private RecyclerView mRecyclerView;
@@ -79,7 +81,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         if (user != null) {
             String uid = user.getUid();
 
-            databaseReference.child("users").child(uid).child("contents").addChildEventListener(new ChildEventListener() {
+            databaseReference.child("users").child(uid).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Item item = dataSnapshot.getValue(Item.class);

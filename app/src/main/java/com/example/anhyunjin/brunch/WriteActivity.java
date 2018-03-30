@@ -1,4 +1,4 @@
-package com.example.anhyunjin.brunch;
+package com.example.anhyunjin.brunch; //굿굿 ^^ 공부 굿굿 ^^ 굿굿 ^^!!!! 굿굿 ^^
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,6 +12,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,11 +56,12 @@ public class WriteActivity extends AppCompatActivity {
     private EditText content;
     private ImageView align;
     private String align_value;
-    private Uri downloadUrl;
+    static Uri downloadUrl;
+    static boolean isimage = false;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
-    SimpleDateFormat sdfDate = new SimpleDateFormat("YYYY/MM/dd (EEE)");
+    SimpleDateFormat sdfDate = new SimpleDateFormat("YYYY-MM-dd (HH:mm:ss)");
     String formatDate = sdfDate.format(date);
 
 
@@ -115,6 +117,8 @@ public class WriteActivity extends AppCompatActivity {
                 pto();
             }
         });
+
+
 
 
         align.setOnClickListener(new View.OnClickListener() {
@@ -197,12 +201,14 @@ public class WriteActivity extends AppCompatActivity {
 
     public void setList_image(Intent data) {
         Uri file = data.getData();
-        StorageReference filePath = mStorge.child("images/" + file.getPathSegments());
+        StorageReference filePath = mStorge.child("images/" + formatDate);
 
         filePath.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 downloadUrl = taskSnapshot.getDownloadUrl();
+                isimage = true;
+                Log.d("message", "들어옴");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -224,8 +230,8 @@ public class WriteActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
         String uid = user.getUid();
-        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, true, String.valueOf(downloadUrl));
-        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contents").push().setValue(a);
+        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl));
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(a);
 
         finish();
     }

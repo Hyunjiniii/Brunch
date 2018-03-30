@@ -13,19 +13,6 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/name_join"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:hint="UserName" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TextInputEditText
             android:id="@+id/email_join"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,6 +31,23 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/ps_join"
             android:hint="PassWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:inputType="textPassword"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/pw_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/ps_join2"
+            android:hint="Check PassWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"

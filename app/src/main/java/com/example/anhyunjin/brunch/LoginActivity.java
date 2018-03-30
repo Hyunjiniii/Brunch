@@ -92,11 +92,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     Intent intent = new Intent(LoginActivity.this, ListActivity.class);
                     startActivity(intent);
+                    progressDialog.dismiss();
                     finish();
                 }
+
             }
         };
-    }
+
+}
 
 
     void save() {
@@ -126,14 +129,13 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (!task.isSuccessful())
-                            Toast.makeText(getApplicationContext(), "로그인 오류. 다시 시도하세요.", Toast.LENGTH_LONG).show();
-
+                        if (!task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "로그인 오류. 다시 시도하세요.",  Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                        }
                     }
                 });
     }
-
     @Override
     public void onBackPressed() {
         finish();
