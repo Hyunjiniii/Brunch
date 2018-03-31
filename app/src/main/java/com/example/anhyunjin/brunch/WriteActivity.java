@@ -55,7 +55,7 @@ public class WriteActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
     private ImageView align;
-    private String align_value;
+    static String align_value;
     static Uri downloadUrl;
     static boolean isimage = false;
 
@@ -141,17 +141,9 @@ public class WriteActivity extends AppCompatActivity {
                                 ((EditText) content).setGravity(Gravity.CENTER);
                                 align_value = "CENTER";
                                 break;
-                            case R.id.right:
-                                ((EditText) title).setGravity(Gravity.RIGHT);
-                                ((EditText) content).setGravity(Gravity.RIGHT);
-                                align_value = "RIGHT";
-                                break;
                             default:
                                 break;
                         }
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String uid = user.getUid();
-                        FirebaseDatabase.getInstance().getReference().child("align").child(uid).push().setValue(align_value);
                         return false;
                     }
 
@@ -230,7 +222,8 @@ public class WriteActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
         String uid = user.getUid();
-        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl));
+        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl), align_value);
+
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(a);
 
         finish();

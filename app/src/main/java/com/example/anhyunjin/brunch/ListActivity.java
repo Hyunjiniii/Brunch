@@ -86,10 +86,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Item item = dataSnapshot.getValue(Item.class);
                     if (item.isImage()) {
-                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.isImage(), item.geturl());
+                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.isImage(), item.geturl(), item.getAlign());
                         items.add(a);
                     } else {
-                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate());
+                        Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.getAlign());
                         items.add(a);
                     }
 

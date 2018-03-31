@@ -9,24 +9,29 @@ public class Item {
     private String content;
     private boolean image;
     private String url;
+    private String align;
 
     public Item() {
 
     }
 
-    public Item(String title, String content, String date, boolean image, String url) {
+    public Item(String title, String content, String date, boolean image, String url, String align) {
         this.title = title;
         this.date = date;
         this.content = content;
         this.image = image;
         this.url = url;
+        this.align = align;
     }
 
-    public Item(String title, String content, String date){
+    public Item(String title, String content, String date, String align){
         this.title = title;
         this.content = content;
         this.date = date;
+        this.align = align;
     }
+
+    public String getAlign() {return this.align;}
 
     public String getTitle() { return this.title; }
 

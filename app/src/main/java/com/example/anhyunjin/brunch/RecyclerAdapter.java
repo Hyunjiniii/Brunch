@@ -6,24 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -58,6 +52,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.title.setText(contentItem.getTitle());
         holder.date.setText(time1);
         holder.content.setText(contentItem.getContent());
+
+        if(contentItem.getAlign().equals("LEFT")){
+            holder.title.setGravity(Gravity.LEFT);
+            holder.date.setGravity(Gravity.LEFT);
+            holder.content.setGravity(Gravity.LEFT);
+        }
+
+        else if(contentItem.getAlign().equals("CENTER")){
+            holder.title.setGravity(Gravity.CENTER);
+            holder.date.setGravity(Gravity.CENTER);
+            holder.content.setGravity(Gravity.CENTER);
+        }
+
+        else {
+            holder.title.setGravity(Gravity.LEFT);
+            holder.date.setGravity(Gravity.LEFT);
+            holder.content.setGravity(Gravity.LEFT);
+        }
 
         if (contentItem.isImage()) {
             holder.imageView.setVisibility(View.VISIBLE);

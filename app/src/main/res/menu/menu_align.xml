@@ -10,8 +10,4 @@
         android:icon="@drawable/ic_format_align_center_black_24dp"
         android:title="center" />
 
-    <item
-        android:icon="@drawable/ic_format_align_right_black_24dp"
-        android:title="right"
-        android:id="@+id/right" />
 </menu>
