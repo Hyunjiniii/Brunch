@@ -55,6 +55,8 @@ public class WriteActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
     private ImageView align;
+    private ImageView font;
+    static String font_value;
     static String align_value;
     static Uri downloadUrl;
     static boolean isimage = false;
@@ -76,7 +78,7 @@ public class WriteActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.write_title);
         content = (EditText) findViewById(R.id.write_contents);
         align = (ImageView) findViewById(R.id.write_align);
-
+        font = (ImageView) findViewById(R.id.write_font);
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,8 +120,32 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
+        font.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
 
+                getMenuInflater().inflate(R.menu.menu_font, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()){
+                            case R.id.BM_dohyeon:
+                                Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BMDOHYEON_otf.TTF");
+                                title.setTypeface(typeFace);
+                                content.setTypeface(typeFace);
+                                font_value = "BMDOHYEON";
+                                break;
+                            default:
+                                break;
 
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
 
         align.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +248,7 @@ public class WriteActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
         String uid = user.getUid();
-        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl), align_value);
+        Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl), align_value, font_value);
 
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(a);
 

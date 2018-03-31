@@ -10,26 +10,31 @@ public class Item {
     private boolean image;
     private String url;
     private String align;
+    private String font;
 
     public Item() {
 
     }
 
-    public Item(String title, String content, String date, boolean image, String url, String align) {
+    public Item(String title, String content, String date, boolean image, String url, String align, String font) {
         this.title = title;
         this.date = date;
         this.content = content;
         this.image = image;
         this.url = url;
         this.align = align;
+        this.font = font;
     }
 
-    public Item(String title, String content, String date, String align){
+    public Item(String title, String content, String date, String align, String font){
         this.title = title;
         this.content = content;
         this.date = date;
         this.align = align;
+        this.font = font;
     }
+
+    public String getFont() {return this.font;}
 
     public String getAlign() {return this.align;}
 
