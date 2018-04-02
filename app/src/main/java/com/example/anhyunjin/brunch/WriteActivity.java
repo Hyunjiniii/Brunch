@@ -233,7 +233,7 @@ public class WriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WriteActivity.this, Onclick_ImageActivity.class);
-                intent.putExtra("url", downloadUrl);
+                intent.putExtra("url", String.valueOf(downloadUrl));
                 startActivity(intent);
             }
         });
