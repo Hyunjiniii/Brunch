@@ -105,6 +105,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                 case R.id.menu_del:
                                     deleteAlert(holder, contentItem, true);
                                     break;
+                                case R.id.menu_edit:
+
                             }
                             return false;
                         }
@@ -129,6 +131,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             switch (menuItem.getItemId()) {
                                 case R.id.menu_del:
                                     deleteAlert(holder, contentItem, false);
+                                    break;
+                                case R.id.menu_edit:
                                     break;
                             }
                             return false;

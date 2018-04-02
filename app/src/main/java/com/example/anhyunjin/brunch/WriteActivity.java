@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,6 +59,11 @@ public class WriteActivity extends AppCompatActivity {
     private EditText content;
     private ImageView align;
     private ImageView font;
+    private ImageView image_view;
+    private ImageView image_show_down;
+    private ImageView image_show_up;
+    private FrameLayout image_layout;
+    private TextView image_text;
     static String font_value;
     static String align_value;
     static Uri downloadUrl;
@@ -79,6 +87,17 @@ public class WriteActivity extends AppCompatActivity {
         content = (EditText) findViewById(R.id.write_contents);
         align = (ImageView) findViewById(R.id.write_align);
         font = (ImageView) findViewById(R.id.write_font);
+        image_layout = (FrameLayout) findViewById(R.id.write_image_layout);
+        image_view = (ImageView) findViewById(R.id.write_image_view);
+        image_show_up = (ImageView) findViewById(R.id.write_image_show_up);
+        image_show_down = (ImageView) findViewById(R.id.write_image_show_down);
+        image_text = (TextView) findViewById(R.id.write_image_text);
+
+        image_view.setVisibility(View.GONE);
+        image_text.setVisibility(View.GONE);
+        image_layout.setVisibility(View.GONE);
+        image_show_down.setVisibility(View.GONE);
+
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +113,6 @@ public class WriteActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         cls.setOnClickListener(new View.OnClickListener()
 
@@ -129,7 +147,7 @@ public class WriteActivity extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()){
+                        switch (menuItem.getItemId()) {
                             case R.id.BM_dohyeon:
                                 Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BMDOHYEON_otf.TTF");
                                 title.setTypeface(typeFace);
@@ -175,6 +193,48 @@ public class WriteActivity extends AppCompatActivity {
 
                 });
                 popup.show();
+            }
+        });
+
+        image_show_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image_layout.setVisibility(View.VISIBLE);
+                image_show_up.setVisibility(View.GONE);
+                image_show_down.setVisibility(View.VISIBLE);
+
+                if (isimage) {
+                    image_view.setVisibility(View.VISIBLE);
+                    image_text.setVisibility(View.GONE);
+
+                    Glide.with(image_view.getContext())
+                            .load(downloadUrl)
+                            .into(image_view);
+
+                } else {
+                    image_view.setVisibility(View.GONE);
+                    image_text.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        image_show_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image_layout.setVisibility(View.GONE);
+                image_show_up.setVisibility(View.VISIBLE);
+                image_show_down.setVisibility(View.GONE);
+                image_view.setVisibility(View.GONE);
+                image_text.setVisibility(View.GONE);
+            }
+        });
+
+        image_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(WriteActivity.this, Onclick_ImageActivity.class);
+                intent.putExtra("url", downloadUrl);
+                startActivity(intent);
             }
         });
 
@@ -226,7 +286,6 @@ public class WriteActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 downloadUrl = taskSnapshot.getDownloadUrl();
                 isimage = true;
-                Log.d("message", "들어옴");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

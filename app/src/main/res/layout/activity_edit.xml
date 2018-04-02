@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
     android:layout_marginTop="10dp"
     android:orientation="vertical"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    tools:context="com.example.anhyunjin.brunch.EditActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="글쓰기" />
+                    android:text="수정" />
 
                 <ImageView
                     android:id="@+id/write_check"
@@ -62,11 +64,12 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/write_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textSize="14sp"
                     android:background="@android:color/transparent"
                     android:hint="제목"
                     android:inputType="text" />
@@ -80,11 +83,12 @@
                 android:background="#D3D0D0" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/write_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textSize="14sp"
                 android:background="@android:color/transparent"
                 android:gravity="top"
                 android:hint="내용을 입력하세요"
@@ -93,28 +97,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <FrameLayout
-        android:id="@+id/write_image_layout"
-        android:layout_width="match_parent"
-        android:layout_height="150sp"
-        android:background="#e7e7e7">
-
-        <TextView
-            android:id="@+id/write_image_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="10sp"
-            android:text="이미지가 없습니다."/>
-
-        <ImageView
-            android:id="@+id/write_image_view"
-            android:layout_margin="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
@@ -156,25 +138,6 @@
             android:maxHeight="30dp"
             android:maxWidth="30dp"
             android:src="@drawable/icon_align" />
-
-        <ImageView
-            android:id="@+id/write_image_show_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10sp"
-            android:layout_marginTop="5sp"
-            android:src="@drawable/ic_arrow_drop_up_black_24dp" />
-
-        <ImageView
-            android:id="@+id/write_image_show_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10sp"
-            android:layout_marginTop="5sp"
-            android:src="@drawable/ic_arrow_drop_down_black_24dp" />
-
     </RelativeLayout>
 
 

@@ -29,11 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SystemActivity" />
         <activity
             android:name=".Onclick_ImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".EditActivity"></activity>
     </application>
 
 </manifest>

@@ -45,7 +45,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private Boolean isFabOpen = false;
-    private FloatingActionButton fab, fab_logout, fab_add, fab_sys;
+    private FloatingActionButton fab, fab_logout, fab_add;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
 
     @Override
@@ -60,7 +60,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
         fab_add = (FloatingActionButton) findViewById(R.id.fab2);
-        fab_sys = (FloatingActionButton) findViewById(R.id.fab3);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -70,7 +69,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
         fab_logout.setOnClickListener(this);
         fab_add.setOnClickListener(this);
-        fab_sys.setOnClickListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -152,8 +150,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 Log.d("Raj", "Fab 2");
                 break;
-            case R.id.fab3:
-                break;
         }
     }
 
@@ -164,10 +160,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             fab.startAnimation(rotate_backward);
             fab_logout.startAnimation(fab_close);
             fab_add.startAnimation(fab_close);
-            fab_sys.startAnimation(fab_close);
             fab_logout.setClickable(false);
             fab_add.setClickable(false);
-            fab_sys.setClickable(false);
             isFabOpen = false;
             Log.d("Raj", "close");
 
@@ -176,10 +170,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             fab.startAnimation(rotate_forward);
             fab_logout.startAnimation(fab_open);
             fab_add.startAnimation(fab_open);
-            fab_sys.startAnimation(fab_open);
             fab_logout.setClickable(true);
             fab_add.setClickable(true);
-            fab_sys.setClickable(true);
             isFabOpen = true;
             Log.d("Raj", "open");
 
