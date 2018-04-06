@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -133,6 +134,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     deleteAlert(holder, contentItem, false);
                                     break;
                                 case R.id.menu_edit:
+                                    Intent intent = new Intent(context, EditText.class);
+                                    intent.putExtra("edit", contentItem.getDate());
+                                    context.startActivity(intent);
                                     break;
                             }
                             return false;

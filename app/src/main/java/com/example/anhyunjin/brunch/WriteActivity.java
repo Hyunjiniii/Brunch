@@ -237,7 +237,6 @@ public class WriteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -308,8 +307,9 @@ public class WriteActivity extends AppCompatActivity {
         Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
         String uid = user.getUid();
         Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl), align_value, font_value);
-
+        Item b = new Item(title.getText().toString(), content.getText().toString(), formatDate, align_value, font_value);
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(a);
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(b);
 
         finish();
     }

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/write_close"
+                    android:id="@+id/edit_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -41,7 +41,7 @@
                     android:text="수정" />
 
                 <ImageView
-                    android:id="@+id/write_check"
+                    android:id="@+id/edit_check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -64,8 +64,8 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/write_title"
+                <EditText
+                    android:id="@+id/edit_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -83,8 +83,8 @@
                 android:background="#D3D0D0" />
 
 
-            <TextView
-                android:id="@+id/write_contents"
+            <EditText
+                android:id="@+id/edit_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -97,6 +97,29 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/edit_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:background="#e7e7e7">
+
+        <TextView
+            android:id="@+id/edit_image_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="10sp"
+            android:text="이미지가 없습니다."/>
+
+        <ImageView
+            android:id="@+id/edit_image_view"
+            android:layout_margin="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 
     <View
         android:layout_width="match_parent"
@@ -111,7 +134,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/write_photo"
+            android:id="@+id/edit_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -120,7 +143,7 @@
             android:src="@drawable/icon_photo" />
 
         <ImageView
-            android:id="@+id/write_font"
+            android:id="@+id/edit_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -130,7 +153,7 @@
             android:src="@drawable/icon_color" />
 
         <ImageView
-            android:id="@+id/write_align"
+            android:id="@+id/edit_align"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
@@ -138,6 +161,24 @@
             android:maxHeight="30dp"
             android:maxWidth="30dp"
             android:src="@drawable/icon_align" />
+
+        <ImageView
+            android:id="@+id/edit_image_show_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5sp"
+            android:src="@drawable/ic_arrow_drop_up_black_24dp" />
+
+        <ImageView
+            android:id="@+id/edit_image_show_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5sp"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp" />
     </RelativeLayout>
 
 
