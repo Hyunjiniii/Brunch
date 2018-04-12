@@ -6,6 +6,7 @@ import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.media.session.IMediaControllerCallback;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +49,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab_logout, fab_add;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    private TextView lottie_text;
+    private LottieAnimationView lottieAnimationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +59,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setCustomView(R.layout.actionbar_design);
         setContentView(R.layout.recyclerview);
 
-
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_logout = (FloatingActionButton) findViewById(R.id.fab1);
         fab_add = (FloatingActionButton) findViewById(R.id.fab2);
+        lottie_text = (TextView) findViewById(R.id.recycler_text);
+        lottieAnimationView = (LottieAnimationView) findViewById(R.id.animation_view);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -75,6 +80,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
 
+        addDataView();
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
@@ -86,12 +93,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     if (item.isImage()) {
                         Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.isImage(), item.geturl(), item.getAlign(), item.getFont());
                         items.add(a);
+                        adapter.notifyDataSetChanged();
                     } else {
                         Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.getAlign(), item.getFont());
                         items.add(a);
+                        adapter.notifyDataSetChanged();
                     }
 
-                    adapter.notifyDataSetChanged();
+                    addDataView();
                 }
 
                 @Override
@@ -101,7 +110,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                    addDataView();
                 }
 
                 @Override
@@ -115,7 +124,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
-
     }
 
     @Override
@@ -151,6 +159,21 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("Raj", "Fab 2");
                 break;
         }
+    }
+
+    public void addDataView(){
+        if(items.size() == 0) {
+            lottie_text.setVisibility(View.VISIBLE);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            lottieAnimationView.playAnimation();
+            lottieAnimationView.loop(true);
+        }
+        else {
+            lottie_text.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.GONE);
+            lottieAnimationView.clearAnimation();
+        }
+
     }
 
     public void animateFAB() {

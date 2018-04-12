@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
     android:layout_marginTop="10dp"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    tools:context="com.example.anhyunjin.brunch.EditActivity">
+    android:paddingBottom="16dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -69,7 +67,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="14sp"
                     android:background="@android:color/transparent"
                     android:hint="제목"
                     android:inputType="text" />
@@ -88,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textSize="14sp"
                 android:background="@android:color/transparent"
                 android:gravity="top"
                 android:hint="내용을 입력하세요"
@@ -109,17 +105,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="10sp"
-            android:text="이미지가 없습니다."/>
+            android:text="이미지가 없습니다."
+            android:textSize="10sp" />
 
         <ImageView
             android:id="@+id/edit_image_view"
-            android:layout_margin="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_margin="10sp" />
     </FrameLayout>
-
 
     <View
         android:layout_width="match_parent"
@@ -179,6 +174,7 @@
             android:layout_marginRight="10sp"
             android:layout_marginTop="5sp"
             android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+
     </RelativeLayout>
 
 

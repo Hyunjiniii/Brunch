@@ -38,8 +38,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -48,6 +52,10 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.example.anhyunjin.brunch.ListActivity.databaseReference;
+import static com.example.anhyunjin.brunch.ListActivity.firebaseDatabase;
+import static com.example.anhyunjin.brunch.ListActivity.items;
 
 public class WriteActivity extends AppCompatActivity {
     final int GALLERY_INTENT = 100;
@@ -307,9 +315,7 @@ public class WriteActivity extends AppCompatActivity {
         Toast.makeText(WriteActivity.this, "저장되었습니다.", Toast.LENGTH_LONG).show();
         String uid = user.getUid();
         Item a = new Item(title.getText().toString(), content.getText().toString(), formatDate, isimage, String.valueOf(downloadUrl), align_value, font_value);
-        Item b = new Item(title.getText().toString(), content.getText().toString(), formatDate, align_value, font_value);
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(a);
-        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child(formatDate).setValue(b);
 
         finish();
     }
@@ -322,5 +328,7 @@ public class WriteActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 
 }

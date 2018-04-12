@@ -17,9 +17,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -107,6 +110,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     deleteAlert(holder, contentItem, true);
                                     break;
                                 case R.id.menu_edit:
+                                    Intent intent = new Intent(context, EditActivity.class);
+                                    intent.putExtra("date", contentItem.getDate());
+                                    context.startActivity(intent);
+                                    break;
 
                             }
                             return false;
@@ -134,8 +141,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     deleteAlert(holder, contentItem, false);
                                     break;
                                 case R.id.menu_edit:
-                                    Intent intent = new Intent(context, EditText.class);
-                                    intent.putExtra("edit", contentItem.getDate());
+                                    Intent intent = new Intent(context, EditActivity.class);
+                                    intent.putExtra("date", contentItem.getDate());
                                     context.startActivity(intent);
                                     break;
                             }
@@ -151,11 +158,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Onclick_ImageActivity.class);
-                intent.putExtra("url", contentItem.geturl());
+                intent.putExtra("date", contentItem.getDate());
                 context.startActivity(intent);
             }
         });
-
     }
 
     public void deleteAlert(final ViewHolder holder, final Item item, final boolean hasImg) {
