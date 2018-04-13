@@ -2,6 +2,8 @@ package com.example.anhyunjin.brunch;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,13 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,8 +41,11 @@ import static com.example.anhyunjin.brunch.WriteActivity.font_value;
 import static com.example.anhyunjin.brunch.WriteActivity.isimage;
 
 public class EditActivity extends AppCompatActivity {
+    final int GALLERY_INTENT = 100;
+    private StorageReference mStorge = FirebaseStorage.getInstance().getReference();
     private EditText title;
     private EditText content;
+    private ImageView pto;
     private ImageView chk;
     private ImageView cls;
     private ImageView font;
@@ -42,10 +53,18 @@ public class EditActivity extends AppCompatActivity {
     private ImageView image_view;
     private ImageView image_show_down;
     private ImageView image_show_up;
+    private ImageView image_del;
     private FrameLayout image_layout;
     private TextView image_text;
     static String font_value;
     static String align_value;
+    static Uri downloadUrl;
+    boolean isimage = false;
+
+    long now = System.currentTimeMillis();
+    Date date = new Date(now);
+    SimpleDateFormat sdfDate = new SimpleDateFormat("YYYY-MM-dd (HH:mm:ss)");
+    String formatDate = sdfDate.format(date);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +82,8 @@ public class EditActivity extends AppCompatActivity {
         image_text = (TextView) findViewById(R.id.edit_image_text);
         font = (ImageView) findViewById(R.id.edit_font);
         align = (ImageView) findViewById(R.id.edit_align);
+        pto = (ImageView) findViewById(R.id.edit_photo);
+        image_del = (ImageView) findViewById(R.id.edit_image_del);
 
         image_view.setVisibility(View.GONE);
         image_text.setVisibility(View.GONE);
@@ -78,7 +99,8 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Item item = dataSnapshot.getValue(Item.class);
-
+                downloadUrl = Uri.parse(item.geturl());
+                isimage = item.isImage();
                 title.setText(item.getTitle());
                 content.setText(item.getContent());
             }
@@ -88,6 +110,16 @@ public class EditActivity extends AppCompatActivity {
 
             }
         });
+
+        pto.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View view) {
+                pto();
+            }
+        });
+
 
         font.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +179,16 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+        image_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image_view.setVisibility(View.GONE);
+                image_text.setVisibility(View.VISIBLE);
+                image_del.setVisibility(View.GONE);
+                downloadUrl = null;
+                isimage = false;
+            }
+        });
 
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +220,7 @@ public class EditActivity extends AppCompatActivity {
                 if (isimage) {
                     image_view.setVisibility(View.VISIBLE);
                     image_text.setVisibility(View.GONE);
+                    image_del.setVisibility(View.VISIBLE);
 
                     Glide.with(image_view.getContext())
                             .load(downloadUrl)
@@ -186,6 +229,7 @@ public class EditActivity extends AppCompatActivity {
                 } else {
                     image_view.setVisibility(View.GONE);
                     image_text.setVisibility(View.VISIBLE);
+                    image_del.setVisibility(View.GONE);
                 }
             }
         });
@@ -198,6 +242,7 @@ public class EditActivity extends AppCompatActivity {
                 image_show_down.setVisibility(View.GONE);
                 image_view.setVisibility(View.GONE);
                 image_text.setVisibility(View.GONE);
+                image_del.setVisibility(View.GONE);
             }
         });
 
@@ -209,5 +254,49 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK)
+            return;
+
+        switch (requestCode) {
+            case GALLERY_INTENT:
+                setList_image(data);
+                break;
+
+            default:
+                break;
+
+        }
+    }
+
+    public void setList_image(Intent data) {
+        Uri file = data.getData();
+        StorageReference filePath = mStorge.child("images/" + formatDate);
+
+        filePath.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                downloadUrl = taskSnapshot.getDownloadUrl();
+                isimage = true;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditActivity.this, "예외 발생" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void pto() {
+        final int GALLERY_INTENT = 100;
+
+        Intent i = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i, GALLERY_INTENT);
     }
 }

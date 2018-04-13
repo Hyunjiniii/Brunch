@@ -106,14 +106,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="이미지가 없습니다."
-            android:textSize="10sp" />
-
-        <ImageView
-            android:id="@+id/edit_image_view"
+            android:textSize="12sp" />
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10sp" />
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/edit_image_del"
+                android:layout_width="15sp"
+                android:layout_height="15sp"
+                android:layout_gravity="right|top"
+                android:src="@drawable/cancel"/>
+            <ImageView
+                android:id="@+id/edit_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10sp" />
+        </FrameLayout>
+
+
     </FrameLayout>
 
     <View

@@ -58,25 +58,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.date.setText(time1);
         holder.content.setText(contentItem.getContent());
 
-        if("LEFT".equals(contentItem.getAlign())){
+        if ("LEFT".equals(contentItem.getAlign())) {
             holder.title.setGravity(Gravity.START);
             holder.date.setGravity(Gravity.START);
             holder.content.setGravity(Gravity.START);
-        }
-
-        else if("CENTER".equals(contentItem.getAlign())){
+        } else if ("CENTER".equals(contentItem.getAlign())) {
             holder.title.setGravity(Gravity.CENTER);
             holder.date.setGravity(Gravity.CENTER);
             holder.content.setGravity(Gravity.CENTER);
-        }
-
-        else {
+        } else {
             holder.title.setGravity(Gravity.START);
             holder.date.setGravity(Gravity.START);
             holder.content.setGravity(Gravity.START);
         }
 
-        if("BMDOHYEON".equals(contentItem.getFont())){
+        if ("BMDOHYEON".equals(contentItem.getFont())) {
             Typeface typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/BMDOHYEON_otf.TTF");
             holder.title.setTextSize(20);
             holder.date.setTextSize(11);

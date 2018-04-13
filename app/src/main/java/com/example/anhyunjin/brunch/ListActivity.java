@@ -80,6 +80,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
 
+        items.clear();
         addDataView();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -105,7 +106,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                    finish();
+                    startActivity(getIntent());
                 }
 
                 @Override
@@ -161,14 +163,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void addDataView(){
-        if(items.size() == 0) {
+    public void addDataView() {
+        if (items.size() == 0) {
             lottie_text.setVisibility(View.VISIBLE);
             lottieAnimationView.setVisibility(View.VISIBLE);
             lottieAnimationView.playAnimation();
             lottieAnimationView.loop(true);
-        }
-        else {
+        } else {
             lottie_text.setVisibility(View.GONE);
             lottieAnimationView.setVisibility(View.GONE);
             lottieAnimationView.clearAnimation();

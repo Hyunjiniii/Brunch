@@ -30,9 +30,9 @@
             android:id="@+id/recycler_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_gravity="center"
-            android:text="메모를 추가하세요" />
+            android:text="메모를 추가하세요"
+            android:visibility="gone" />
     </LinearLayout>
 
 
