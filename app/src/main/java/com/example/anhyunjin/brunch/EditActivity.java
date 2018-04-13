@@ -99,10 +99,16 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Item item = dataSnapshot.getValue(Item.class);
-                downloadUrl = Uri.parse(item.geturl());
+                if (item.isImage()) {
+                    downloadUrl = Uri.parse(item.geturl());
+                }
+                font_value = item.getFont();
+                align_value = item.getAlign();
                 isimage = item.isImage();
                 title.setText(item.getTitle());
                 content.setText(item.getContent());
+
+                setFA();
             }
 
             @Override
@@ -298,5 +304,21 @@ public class EditActivity extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
         startActivityForResult(i, GALLERY_INTENT);
+    }
+
+    public void setFA() {
+        if ("BMDOHYEON".equals(font_value)) {
+            Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BMDOHYEON_otf.TTF");
+            title.setTypeface(typeFace);
+            content.setTypeface(typeFace);
+        }
+
+        if ("LEFT".equals(align_value)) {
+            title.setGravity(Gravity.START);
+            content.setGravity(Gravity.START);
+        } else if ("CENTER".equals(align_value)) {
+            title.setGravity(Gravity.CENTER);
+            content.setGravity(Gravity.CENTER);
+        }
     }
 }
