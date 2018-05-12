@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Brunch</string>
+    <string name="login">a@naver.com</string>
+    <string name="password">aaaaaa</string>
 </resources>

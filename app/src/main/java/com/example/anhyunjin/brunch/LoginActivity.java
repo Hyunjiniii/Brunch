@@ -24,8 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private boolean saveLoginData;
-    private String email;
-    private String pwd;
+    private String email, pwd;
     private Button login_btn;
     private TextView join_btn;
     private EditText email_login;

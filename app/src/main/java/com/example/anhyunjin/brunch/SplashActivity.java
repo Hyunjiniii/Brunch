@@ -69,7 +69,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         else {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, Viewpager.class));
             finish();
         }
 
