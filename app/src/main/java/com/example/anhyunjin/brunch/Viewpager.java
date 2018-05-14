@@ -1,15 +1,20 @@
 package com.example.anhyunjin.brunch;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import static com.example.anhyunjin.brunch.FirstFragment.welcome;
 import static com.example.anhyunjin.brunch.SecondFragment.write;
 import static com.example.anhyunjin.brunch.ThirdFragment.user;
+import static com.example.anhyunjin.brunch.FourthFragment.postcard;
+import static com.example.anhyunjin.brunch.FourthFragment.a;
+import static com.example.anhyunjin.brunch.FifthFragment.acrobatic;
 
 public class Viewpager extends AppCompatActivity {
     private ViewPager vp;
@@ -33,10 +38,21 @@ public class Viewpager extends AppCompatActivity {
                 switch (vp.getCurrentItem()) {
                     case 1:
                         welcome.playAnimation();
+                        break;
                     case 2:
                         write.playAnimation();
+                        break;
                     case 3:
                         user.playAnimation();
+                        break;
+                    case 4:
+                        Log.d("intintint", String.valueOf(a));
+                        break;
+                    case 5:
+                        acrobatic.playAnimation();
+                        case5();
+                        break;
+
                 }
             }
         });
@@ -60,6 +76,10 @@ public class Viewpager extends AppCompatActivity {
                     return new SecondFragment();
                 case 2:
                     return new ThirdFragment();
+                case 3:
+                    return new FourthFragment();
+                case 4:
+                    return new FifthFragment();
                 default:
                     return null;
             }
@@ -67,7 +87,22 @@ public class Viewpager extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 5;
         }
+    }
+
+    private void case5() {
+        fab.setImageResource(R.drawable.ic_check_black_24dp);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int infoFirst = 1;
+                SharedPreferences a = getSharedPreferences("a", MODE_PRIVATE);
+                SharedPreferences.Editor editor = a.edit();
+                editor.putInt("First", infoFirst);
+                editor.commit();
+                finish();
+            }
+        });
     }
 }

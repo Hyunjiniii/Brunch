@@ -2,26 +2,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f5f5f5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
-    tools:context=".SecondFragment">
+    tools:context=".FifthFragment">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/write_lottie"
-        android:layout_width="300sp"
-        android:layout_height="300sp"
+        android:id="@+id/acrobatics_lottie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="60sp"
-        app:lottie_fileName="pencil_write.json" />
+        app:lottie_fileName="acrobatics.json"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="30sp"
-        android:layout_marginBottom="40sp"
-        android:text="메모를 작성하고 \n저장할 수 있습니다!"
-        android:textSize="30sp" />
+        android:layout_margin="40sp"
+        android:text="지금\n시작해보세요!"
+        android:textStyle="bold"
+        android:textSize="30sp"/>
 
 </FrameLayout>

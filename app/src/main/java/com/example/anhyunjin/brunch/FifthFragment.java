@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-public class ThirdFragment extends Fragment {
-    public static LottieAnimationView user;
+public class FifthFragment extends Fragment {
+    public static LottieAnimationView acrobatic;
 
-    public ThirdFragment(){
+    public FifthFragment() {
 
     }
 
@@ -23,10 +23,11 @@ public class ThirdFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.activity_third_fragment, container, false);
-        user = view.findViewById(R.id.user_lottie);
-        user.playAnimation();
-        user.loop(true);
+        View view = (View) inflater.inflate(R.layout.activity_fifth_fragment, container, false);
+        acrobatic = view.findViewById(R.id.acrobatics_lottie);
+        acrobatic.playAnimation();
+        acrobatic.setImageAssetsFolder("images/");
+        acrobatic.loop(true);
 
         return view;
     }

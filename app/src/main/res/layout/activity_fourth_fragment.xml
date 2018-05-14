@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f5f5f5"
     tools:context=".FourthFragment">
 
-</android.support.constraint.ConstraintLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/postcard_lottie"
+        android:layout_width="500sp"
+        android:layout_height="500sp"
+        android:layout_marginBottom="30sp"
+        android:layout_gravity="center"
+        app:lottie_fileName="postcard.json" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="30sp"
+        android:layout_marginBottom="90sp"
+        android:textStyle="bold"
+        android:text="메모를 카드형식으로"
+        android:textSize="30sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="30sp"
+        android:layout_marginBottom="60sp"
+        android:text="볼 수 있습니다"
+        android:textSize="25sp"/>
+
+
+</FrameLayout>

@@ -26,7 +26,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.activity_second_fragment, container, false);
         write = view.findViewById(R.id.write_lottie);
-//        write.playAnimation();
+        write.playAnimation();
         write.loop(true);
         return view;
     }
