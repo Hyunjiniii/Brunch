@@ -1,12 +1,14 @@
 package com.example.anhyunjin.brunch;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import static com.example.anhyunjin.brunch.FirstFragment.welcome;
@@ -47,10 +49,10 @@ public class Viewpager extends AppCompatActivity {
                         break;
                     case 4:
                         Log.d("intintint", String.valueOf(a));
+                        case5();
                         break;
                     case 5:
                         acrobatic.playAnimation();
-                        case5();
                         break;
 
                 }
@@ -92,7 +94,7 @@ public class Viewpager extends AppCompatActivity {
     }
 
     private void case5() {
-        fab.setImageResource(R.drawable.ic_check_black_24dp);
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_black_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

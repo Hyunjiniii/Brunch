@@ -55,6 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         pref = getSharedPreferences("pref", 0);
         load();
 
+        SharedPreferences preference = getSharedPreferences("a", MODE_PRIVATE);
+        int firstviewshow = preference.getInt("First", 0);
+
+        if (firstviewshow != 1) {
+            Intent intent = new Intent(LoginActivity.this, Viewpager.class);
+            startActivity(intent);
+        }
+
         if (saveLoginData) {
             email_login.setText(email);
             ps_login.setText(pwd);
