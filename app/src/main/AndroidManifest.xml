@@ -4,6 +4,10 @@
     package="com.example.anhyunjin.brunch">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -16,13 +20,16 @@
             android:name=".WriteActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ListActivity" />
+        <activity android:name=".ListActivity"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
+            <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,23 +48,11 @@
             android:name=".Viewpager"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- <activity -->
-        <!-- android:name=".FirstFragment" -->
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-        <!-- android:windowSoftInputMode="stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name=".SecondFragment" -->
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-        <!-- android:windowSoftInputMode="stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name=".ThirdFragment" -->
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-        <!-- android:windowSoftInputMode="stateAlwaysHidden" /> -->
-        <!-- <activity -->
-        <!-- android:name=".FourthFragment" -->
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-        <!-- android:windowSoftInputMode="stateAlwaysHidden" /> -->
-        <activity android:name=".FifthFragment"></activity>
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
     </application>
 
 </manifest>

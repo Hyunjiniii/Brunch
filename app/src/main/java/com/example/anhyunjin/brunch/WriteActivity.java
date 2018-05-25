@@ -4,12 +4,16 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,10 +51,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.anhyunjin.brunch.ListActivity.databaseReference;
@@ -76,12 +83,12 @@ public class WriteActivity extends AppCompatActivity {
     static String align_value;
     static Uri downloadUrl;
     static boolean isimage = false;
+    private int PERMISSIONS_READ_STORAGE = 0;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
     SimpleDateFormat sdfDate = new SimpleDateFormat("YYYY-MM-dd (HH:mm:ss)");
     String formatDate = sdfDate.format(date);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +149,7 @@ public class WriteActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                pto();
+                permission();
             }
         });
 
@@ -245,6 +252,8 @@ public class WriteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        permission();
     }
 
     @Override
@@ -302,6 +311,40 @@ public class WriteActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 0:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("Test", "Permission ok");
+                    pto();
+                } else {
+                    Log.e("Test", "Permission deny");
+                    AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
+                    alert_confirm.setTitle("사진에 접근하기 위해 해당 권한이 필요합니다.").setMessage("[설정] > [권한]에서 해당 권한을 활성화 시켜주세요.")
+                            .setCancelable(false).setPositiveButton("설정",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                            .setData(Uri.parse("package:" + getPackageName()));
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("닫기",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = alert_confirm.create();
+                    alert.show();
+                }
+                break;
+        }
+    }
+
     public void pto() {
         final int GALLERY_INTENT = 100;
 
@@ -329,6 +372,13 @@ public class WriteActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void permission() {
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                PERMISSIONS_READ_STORAGE);
+
+    }
 
 
 }

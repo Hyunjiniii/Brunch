@@ -22,6 +22,11 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -79,6 +84,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
+//
+////        MobileAds.initialize(this, "ca-app-pub-2076306889239295~7223362671");
+//
+//        AdView mAdView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
         items.clear();
         addDataView();
@@ -126,6 +137,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
+
+
     }
 
     @Override
@@ -145,6 +158,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 animateFAB();
                 break;
             case R.id.fab1:
+                animateFAB();
                 Intent intent = new Intent(ListActivity.this, LoginActivity.class);
                 startActivity(intent);
                 SharedPreferences pref = getSharedPreferences("pref", 0);
@@ -156,6 +170,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("Raj", "Fab 1");
                 break;
             case R.id.fab2:
+                animateFAB();
                 intent = new Intent(ListActivity.this, WriteActivity.class);
                 startActivity(intent);
                 Log.d("Raj", "Fab 2");

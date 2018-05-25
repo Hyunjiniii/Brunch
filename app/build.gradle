@@ -25,6 +25,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:12.0.0'
     implementation 'com.google.firebase:firebase-core:12.0.0'
     implementation 'com.google.firebase:firebase-config:12.0.0'
+    implementation 'com.google.firebase:firebase-ads:12.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -38,6 +39,8 @@ dependencies {
     api 'commons-httpclient:commons-httpclient:3.1'
     implementation 'org.apache.commons:commons-lang3:3.5'
     implementation 'com.airbnb.android:lottie:2.1.0'
+    implementation 'gun0912.ted:tedpermission:2.0.0'
+    implementation 'com.google.android.gms:play-services-ads:12.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

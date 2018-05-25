@@ -1,9 +1,12 @@
 package com.example.anhyunjin.brunch;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -29,9 +32,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.anhyunjin.brunch.ListActivity.databaseReference;
@@ -59,7 +65,9 @@ public class EditActivity extends AppCompatActivity {
     static String font_value;
     static String align_value;
     static Uri downloadUrl;
-    boolean isimage = false;
+    boolean isimage;
+    private String title_value;
+    private String content_value;
 
     long now = System.currentTimeMillis();
     Date date = new Date(now);
@@ -107,6 +115,8 @@ public class EditActivity extends AppCompatActivity {
                 isimage = item.isImage();
                 title.setText(item.getTitle());
                 content.setText(item.getContent());
+                title_value = item.getTitle();
+                content_value = item.getContent();
 
                 setFA();
             }
@@ -212,7 +222,14 @@ public class EditActivity extends AppCompatActivity {
         cls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                String getEdit2 = title.getText().toString();
+                String getEdit3 = content.getText().toString();
+
+                if (getEdit2.equals(title_value) && getEdit3.equals(content_value))
+                    finish();
+
+                else
+                    alt();
             }
         });
 
@@ -321,4 +338,22 @@ public class EditActivity extends AppCompatActivity {
             content.setGravity(Gravity.CENTER);
         }
     }
+
+    DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            finish();
+        }
+    };
+
+
+    public void alt() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("작성중인 내용을 저장하지 않고 나가시겠습니까?");
+        builder.setPositiveButton("확인", dialogListener);
+        builder.setNegativeButton("취소", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
