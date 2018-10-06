@@ -381,4 +381,4 @@ public class WriteActivity extends AppCompatActivity {
     }
 
 
-}
+}//화이팅

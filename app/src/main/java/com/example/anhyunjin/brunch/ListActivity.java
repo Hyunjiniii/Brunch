@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements View.OnClickListener {
+public class  ListActivity extends AppCompatActivity implements View.OnClickListener {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     public static DatabaseReference databaseReference = firebaseDatabase.getReference();
     public static StorageReference mStorage = FirebaseStorage.getInstance().getReference();
@@ -84,7 +84,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
-//
+
 ////        MobileAds.initialize(this, "ca-app-pub-2076306889239295~7223362671");
 //
 //        AdView mAdView = (AdView) findViewById(R.id.adView);
