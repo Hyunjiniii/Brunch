@@ -43,10 +43,11 @@
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
-                        <ImageView
+                        <ImageButton
                             android:id="@+id/list_more_vert_button"
                             android:layout_width="25sp"
                             android:layout_height="25sp"
+                            android:background="@null"
                             android:layout_alignParentRight="true"
                             android:src="@drawable/ic_more_vert_black_24dp" />
 
@@ -84,7 +85,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLength="18"
                         android:text="Content"
                         android:textColor="#000000"
                         android:textSize="16dp" />

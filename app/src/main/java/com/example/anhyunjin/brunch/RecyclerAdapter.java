@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -198,11 +199,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView content;
         CardView cardView;
         ImageView imageView;
-        ImageView imgbtn;
+        ImageButton imgbtn;
 
         public ViewHolder(final View itemView) {
             super(itemView);
-            imgbtn = (ImageView) itemView.findViewById(R.id.list_more_vert_button);
+            imgbtn = (ImageButton) itemView.findViewById(R.id.list_more_vert_button);
             date = (TextView) itemView.findViewById(R.id.list_date);
             title = (TextView) itemView.findViewById(R.id.list_title);
             content = (TextView) itemView.findViewById(R.id.list_content);

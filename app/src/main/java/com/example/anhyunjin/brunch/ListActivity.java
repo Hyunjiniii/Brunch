@@ -85,8 +85,6 @@ public class  ListActivity extends AppCompatActivity implements View.OnClickList
         adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
 
-////        MobileAds.initialize(this, "ca-app-pub-2076306889239295~7223362671");
-//
 //        AdView mAdView = (AdView) findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
@@ -137,8 +135,6 @@ public class  ListActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         }
-
-
     }
 
     @Override
