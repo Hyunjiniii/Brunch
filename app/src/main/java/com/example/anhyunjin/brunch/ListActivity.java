@@ -22,11 +22,6 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -85,10 +80,6 @@ public class  ListActivity extends AppCompatActivity implements View.OnClickList
         adapter = new RecyclerAdapter(items, ListActivity.this);
         mRecyclerView.setAdapter(adapter);
 
-//        AdView mAdView = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
-
         items.clear();
         addDataView();
 
@@ -100,6 +91,7 @@ public class  ListActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     Item item = dataSnapshot.getValue(Item.class);
+                    items.clear();
                     if (item.isImage()) {
                         Item a = new Item(item.getTitle(), item.getContent(), item.getDate(), item.isImage(), item.geturl(), item.getAlign(), item.getFont());
                         items.add(a);

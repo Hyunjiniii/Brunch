@@ -161,7 +161,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
-    public void deleteAlert(final ViewHolder holder, final Item item, final boolean hasImg) {
+    private void deleteAlert(final ViewHolder holder, final Item item, final boolean hasImg) {
 
         AlertDialog.Builder alert_confirm = new AlertDialog.Builder(context);
         alert_confirm.setMessage("삭제하시겠습니까?").setCancelable(false).setPositiveButton("삭제",

@@ -39,8 +39,6 @@ public class JoinActivity extends AppCompatActivity {
     private EditText edit_ps2;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
-    TextInputLayout pw_layout;
-    TextInputLayout pw_layout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +70,7 @@ public class JoinActivity extends AppCompatActivity {
                     Toast.makeText(JoinActivity.this, "Password를 6자 이상 입력해 주세요.", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(!edit_ps.getText().toString().equals(edit_ps2.getText().toString())){
+                if (!edit_ps.getText().toString().equals(edit_ps2.getText().toString())) {
                     Toast.makeText(JoinActivity.this, "Password가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -86,11 +84,11 @@ public class JoinActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(JoinActivity.this, "등록 에러! 이메일 중복!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(JoinActivity.this, "이미 존재하는 이메일입니다.", Toast.LENGTH_SHORT).show();
+                                    task.getException();
+                                    progressDialog.dismiss();
                                     return;
-                                } else{
-                                    Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
-                                    startActivity(intent);
+                                } else {
                                     finish();
                                 }
 

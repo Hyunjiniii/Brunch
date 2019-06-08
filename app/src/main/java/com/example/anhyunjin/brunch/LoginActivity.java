@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             email_login.setText(email);
             ps_login.setText(pwd);
             autologin.setChecked(saveLoginData);
-            save();
+            load();
             loginEvent();
         }
 
@@ -76,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -85,11 +84,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.setMessage("로그인중입니다. 잠시 기다려 주세요...");
                 progressDialog.show();
-                save();
-                loginEvent();
+
+                if (autologin.isChecked()) {
+                    save();
+                    loginEvent();
+                } else
+                    loginEvent();
             }
         });
-
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -102,12 +104,9 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     finish();
                 }
-
             }
         };
-
 }
-
 
     void save() {
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
@@ -139,6 +138,11 @@ public class LoginActivity extends AppCompatActivity {
                         if (!task.isSuccessful()){
                             Toast.makeText(getApplicationContext(), "로그인 오류. 다시 시도하세요.",  Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, ListActivity.class);
+                            startActivity(intent);
+                            progressDialog.dismiss();
+                            finish();
                         }
                     }
                 });

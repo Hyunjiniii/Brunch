@@ -36,6 +36,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -118,7 +119,6 @@ public class WriteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String getEdit2 = title.getText().toString();
                 String getEdit3 = content.getText().toString();
-
 
                 if (getEdit2.getBytes().length <= 0 && getEdit3.getBytes().length <= 0)
                     Toast.makeText(WriteActivity.this, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
@@ -252,8 +252,6 @@ public class WriteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        permission();
     }
 
     @Override
@@ -275,8 +273,6 @@ public class WriteActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        title = (EditText) findViewById(R.id.write_title);
-        content = (EditText) findViewById(R.id.write_contents);
         String getEdit2 = title.getText().toString();
         String getEdit3 = content.getText().toString();
 
@@ -295,18 +291,23 @@ public class WriteActivity extends AppCompatActivity {
 
     public void setList_image(Intent data) {
         Uri file = data.getData();
-        StorageReference filePath = mStorge.child("images/" + formatDate);
+        final StorageReference filePath = mStorge.child("images/" + formatDate);
 
-        filePath.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        filePath.putFile(file).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                downloadUrl = taskSnapshot.getDownloadUrl();
-                isimage = true;
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return filePath.getDownloadUrl();
             }
-        }).addOnFailureListener(new OnFailureListener() {
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(WriteActivity.this, "예외 발생" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    downloadUrl = task.getResult();
+                    isimage = true;
+                }
             }
         });
     }
